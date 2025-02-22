@@ -1,0 +1,78 @@
+/* src/components/Header.css */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dadce0;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 70px; /* 元のサイズに戻す */
+  position: fixed;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto; /* 中央揃え */
+  display: flex;
+  justify-content: space-between; /* タイトルとメニューを左右に */
+  align-items: center;
+  flex-wrap: nowrap; /* 折り返さない */
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #202124;
+  white-space: nowrap;
+}
+
+.navbar-logo {
+  height: 80px; /* ロゴの高さを80pxに増加 */
+  width: auto;
+  object-fit: contain;
+  display: block; /* ブロック要素として表示 */
+  margin: auto 0; /* 垂直方向の中央揃え */
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0; /* 縮まない */
+}
+
+.navbar-item {
+  color: #5f6368;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 8px 12px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.navbar-item:hover {
+  color: #1a73e8;
+  background-color: #f1f3f4;
+  border-radius: 4px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: row; /* モバイルでも横並びを維持 */
+    justify-content: space-between;
+  }
+
+  .navbar-menu {
+    gap: 10px; /* 間隔を狭く */
+  }
+
+  .navbar-item {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+}
