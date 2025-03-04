@@ -13,7 +13,7 @@ function Header() {
         <div className="navbar-menu">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="navbar-item bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="navbar-item"
           >
             新規レース登録
           </button>

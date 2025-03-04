@@ -75,7 +75,16 @@ function App() {
 
                   <FullCalendar
                     plugins={[dayGridPlugin]}
-                    events={events}
+                    events={events.map(event => ({
+                      title: event.title,
+                      start: event.start_date,
+                      end: event.end_date,
+                      extendedProps: {
+                        trackFullName: event.Track.fullName,
+                        trackShortName: event.Track.shortName,
+                        trackPrefecture: event.Track.prefecture,
+                      },
+                    }))}
                     locale="ja"
                     height="auto"
                     headerToolbar={{
@@ -102,7 +111,7 @@ function App() {
                           height: '100%',
                         }}
                       >
-                        <span className="px-2 truncate">{eventInfo.event.title}</span>
+                        <span className="px-2 truncate">{eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}</span>
                       </div>
                     )}
                   />
