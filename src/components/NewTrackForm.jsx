@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './NewTrackForm.css';
+import './FormStyles.css';
 
 function NewTrackForm({ onClose }) {
   const [fullName, setFullName] = useState('');
@@ -9,6 +9,7 @@ function NewTrackForm({ onClose }) {
   const [prefectures, setPrefectures] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // 都道府県一覧を取得
@@ -57,6 +58,8 @@ function NewTrackForm({ onClose }) {
       return;
     }
 
+    setIsSubmitting(true);
+
     const trackData = {
       fullName,
       shortName,
@@ -88,93 +91,126 @@ function NewTrackForm({ onClose }) {
       .catch((error) => {
         console.error('Error:', error);
         alert('エラーが発生しました: ' + error.message);
+        setIsSubmitting(false);
       });
   };
 
   if (isLoading) {
     return (
-      <div className="form-container loading">
-        <div className="spinner"></div>
-        <p>都道府県データを読み込み中...</p>
+      <div className="form-page">
+        <div className="form-container form-loading">
+          <div className="spinner"></div>
+          <p className="loading-text">都道府県データを読み込み中...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="form-container error">
-        <h2>エラーが発生しました</h2>
-        <p>{error}</p>
-        <button onClick={() => window.close()}>閉じる</button>
+      <div className="form-page">
+        <div className="form-container form-error">
+          <div className="error-icon">⚠️</div>
+          <h2 className="error-title">エラーが発生しました</h2>
+          <p className="error-message">{error}</p>
+          <button onClick={() => window.close()} className="btn btn-error">閉じる</button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="form-container">
-      <h2>新規サーキット登録</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          サーキット名:
-          <input 
-            type="text" 
-            maxLength="20" 
-            value={fullName} 
-            onChange={(e) => setFullName(e.target.value)} 
-            required 
-            placeholder="例: フェスティカサーキット栃木"
-          />
-        </label>
-        
-        <label>
-          サーキット略称(3文字):
-          <input 
-            type="text" 
-            maxLength="3" 
-            value={shortName} 
-            onChange={handleShortNameChange} 
-            required 
-            placeholder="例: FST"
-          />
-          <small>※英字大文字3文字以下</small>
-        </label>
-        
-        <label>
-          都道府県:
-          <select 
-            value={prefecture} 
-            onChange={(e) => setPrefecture(e.target.value)} 
-            required
-          >
-            <option value="">選択してください</option>
-            {prefectures.map(pref => (
-              <option key={pref.id} value={pref.name}>
-                {pref.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        
-        <label>
-          ホームページ:
-          <input 
-            type="url" 
-            value={homepageUrl} 
-            onChange={(e) => setHomepageUrl(e.target.value)} 
-            placeholder="例: https://www.festika-circuit.com/"
-          />
-        </label>
-        
-        <div className="button-group">
-          <button type="submit">登録</button>
-          <button 
-            type="button" 
-            onClick={() => window.close()}
-          >
-            キャンセル
-          </button>
+    <div className="form-page">
+      <div className="form-container">
+        <div className="form-header">
+          <h2 className="form-title">新規サーキット登録</h2>
+          <p className="form-subtitle">新しいサーキット情報を入力してください</p>
         </div>
-      </form>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">
+              サーキット名 <span className="required-mark">*</span>
+            </label>
+            <input 
+              className="form-input"
+              type="text" 
+              maxLength="20" 
+              value={fullName} 
+              onChange={(e) => setFullName(e.target.value)} 
+              required 
+              placeholder="例: フェスティカサーキット栃木"
+            />
+            <p className="form-hint">最大20文字まで入力できます</p>
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">
+              サーキット略称 <span className="required-mark">*</span>
+            </label>
+            <input 
+              className="form-input"
+              type="text" 
+              maxLength="3" 
+              value={shortName} 
+              onChange={handleShortNameChange} 
+              required 
+              placeholder="例: FST"
+            />
+            <p className="form-hint">英字大文字3文字以下で入力してください</p>
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">
+              都道府県 <span className="required-mark">*</span>
+            </label>
+            <select 
+              className="form-select"
+              value={prefecture} 
+              onChange={(e) => setPrefecture(e.target.value)} 
+              required
+            >
+              <option value="">選択してください</option>
+              {prefectures.map(pref => (
+                <option key={pref.id} value={pref.name}>
+                  {pref.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">
+              ホームページ <span className="optional-mark">（任意）</span>
+            </label>
+            <input 
+              className="form-input"
+              type="url" 
+              value={homepageUrl} 
+              onChange={(e) => setHomepageUrl(e.target.value)} 
+              placeholder="例: https://www.festika-circuit.com/"
+            />
+          </div>
+          
+          <div className="form-buttons">
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? '登録中...' : '登録する'}
+            </button>
+            <button 
+              type="button" 
+              className="btn btn-secondary"
+              onClick={() => window.close()}
+              disabled={isSubmitting}
+            >
+              キャンセル
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
