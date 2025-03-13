@@ -5,6 +5,9 @@
   border: 1px solid #dadce0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px;
+  max-width: 600px; /* 最大幅を600pxに設定 */
+  width: 50%; /* 幅を画面の50%に設定 */
+  min-width: 300px; /* 最小幅を300pxに設定 */
 }
 
 .form-container h2 {
@@ -16,11 +19,13 @@
   margin-bottom: 10px;
 }
 
-.form-container input {
-  padding: 8px;
+.form-container input,
+.form-container select {
+  padding: 12px;
   border: 1px solid #dadce0;
   border-radius: 4px;
   width: 100%;
+  font-size: 16px;
 }
 
 .form-container button {

@@ -21,21 +21,59 @@
   justify-content: space-between; /* タイトルとメニューを左右に */
   align-items: center;
   flex-wrap: nowrap; /* 折り返さない */
+  width: 100%;
 }
 
-.navbar-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #202124;
-  white-space: nowrap;
+.navbar-branding {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .navbar-logo {
-  height: 80px; /* ロゴの高さを80pxに増加 */
-  width: auto;
-  object-fit: contain;
-  display: block; /* ブロック要素として表示 */
-  margin: auto 0; /* 垂直方向の中央揃え */
+  font-family: 'Racing Sans One', 'Arial', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff4d4d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin: 0;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo-main {
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ff4d4d, #4da6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.navbar-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #333;
+  margin: 0;
+  padding-left: 2px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.navbar-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #4da6ff, transparent);
 }
 
 .navbar-menu {
@@ -49,15 +87,19 @@
   text-decoration: none;
   font-size: 1rem;
   font-weight: 400;
-  padding: 8px 12px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
   white-space: nowrap;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border: 1px solid #dadce0;
 }
 
 .navbar-item:hover {
-  color: #1a73e8;
-  background-color: #f1f3f4;
-  border-radius: 4px;
+  color: white;
+  background-color: #4da6ff;
+  border-color: #4da6ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* レスポンシブ対応 */
@@ -67,12 +109,34 @@
     justify-content: space-between;
   }
 
+  .navbar-branding {
+    gap: 8px;
+  }
+
+  .logo-main {
+    font-size: 1.2rem;
+  }
+
+  .navbar-title {
+    font-size: 1rem;
+  }
+
   .navbar-menu {
     gap: 10px; /* 間隔を狭く */
   }
 
   .navbar-item {
-    padding: 6px 8px;
+    padding: 6px 10px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-main {
+    font-size: 1rem;
+  }
+
+  .navbar-title {
+    font-size: 0.8rem;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import axios from 'axios';
@@ -6,22 +6,33 @@ import './App.css';
 import Header from './components/Header';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NewRaceForm from './components/NewRaceForm';
+import NewTrackForm from './components/NewTrackForm';
+import TrackDetail from './components/TrackDetail';
+import Legend from './components/Legend';
+import { useParams } from 'react-router-dom';
 
-// カテゴリ別の色設定
-const categoryColors = {
-  race: '#ff4d4d',      // レース（赤）
-  practice: '#4da6ff',  // 練習（青）
-  special: '#ffcc00',   // 特別イベント（黄色）
-  default: '#8c8c8c'    // その他（グレー）
+// レース形式別の色設定
+const raceFormatColors = {
+  0: '#ff4d4d', // スプリント（赤）
+  1: '#4da6ff', // 耐久（青）
+  2: '#4CAF50', // MIX（緑）
+  default: '#8c8c8c' // その他（グレー）
 };
 
-// カテゴリに基づいて色を割り当てる関数
-const getEventColor = (category) => categoryColors[category] || categoryColors.default;
+// レース形式に基づいて色を割り当てる関数
+const getRaceFormatColor = (formatId) => {
+  return raceFormatColors[formatId] || raceFormatColors.default;
+};
 
 function App() {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [tooltipContent, setTooltipContent] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const tooltipRef = useRef(null);
+  const hideTimeoutRef = useRef(null);
 
   const fetchSchedules = async () => {
     setIsLoading(true);
@@ -29,10 +40,22 @@ function App() {
     try {
       const response = await axios.get('https://kart-race-api.onrender.com/schedules');
       setEvents(response.data.map(event => ({
-        ...event,
-        backgroundColor: '#4da6ff',
+        id: event.id,
+        title: event.title,
+        start: event.startDate,
+        end: event.endDate,
+        backgroundColor: getRaceFormatColor(event.raceFormat.id),
         borderColor: 'transparent',
         textColor: 'white',
+        extendedProps: {
+          raceFormat: event.raceFormat.name,
+          raceFormatId: event.raceFormat.id,
+          trackFullName: event.Track.fullName,
+          trackShortName: event.Track.shortName,
+          trackPrefecture: event.Track.prefecture,
+          raceUrl: event.raceUrl,
+          trackId: event.Track.id, // トラックIDを追加
+        },
       })));
     } catch (error) {
       console.error('Error fetching schedules:', error);
@@ -46,12 +69,60 @@ function App() {
     fetchSchedules();
   }, []);
 
+  const showTooltip = (e, eventInfo) => {
+    // ツールチップの内容を設定
+    setTooltipContent({
+      trackFullName: eventInfo.event.extendedProps.trackFullName,
+      trackId: eventInfo.event.extendedProps.trackId,
+      raceUrl: eventInfo.event.extendedProps.raceUrl,
+      raceFormat: eventInfo.event.extendedProps.raceFormat,
+    });
+
+    // ツールチップの位置を調整
+    const rect = e.currentTarget.getBoundingClientRect();
+    setTooltipPosition({
+      left: rect.left + window.scrollX,
+      top: rect.bottom + window.scrollY,
+    });
+
+    // ツールチップを表示
+    setIsTooltipVisible(true);
+
+    // 既存のタイマーをクリア
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+  };
+
+  const hideTooltip = () => {
+    // ツールチップを非表示にするタイマーを設定
+    hideTimeoutRef.current = setTimeout(() => {
+      setIsTooltipVisible(false);
+    }, 300); // 300ミリ秒の遅延を設定
+  };
+
+  const handleTooltipMouseEnter = () => {
+    // ツールチップ内にマウスが入ったら、タイマーをクリア
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+  };
+
+  const handleTooltipMouseLeave = () => {
+    // ツールチップからマウスが離れたら、ツールチップを非表示に
+    setIsTooltipVisible(false);
+  };
+
   return (
     <Router>
       <div className="bg-image min-h-screen">
         <Header />
         <Routes>
-          <Route path="/new-race" element={<NewRaceForm />} />
+          <Route path="/new-race" element={<NewRaceForm onClose={() => {}} />} />
+          <Route path="/new-track" element={<NewTrackForm onClose={() => {}} />} />
+          <Route path="/track/:trackId" element={<TrackDetail />} />
           <Route path="/" element={
             <div className="py-8 px-4 pt-24">
               <div className="max-w-5xl mx-auto bg-transparent">
@@ -79,18 +150,12 @@ function App() {
                           </div>
                         )}
 
+                        {/* 凡例コンポーネントを使用 */}
+                        <Legend raceFormatColors={raceFormatColors} />
+
                         <FullCalendar
                           plugins={[dayGridPlugin]}
-                          events={events.map(event => ({
-                            title: event.title,
-                            start: event.start_date,
-                            end: event.end_date,
-                            extendedProps: {
-                              trackFullName: event.Track.fullName,
-                              trackShortName: event.Track.shortName,
-                              trackPrefecture: event.Track.prefecture,
-                            },
-                          }))}
+                          events={events}
                           locale="ja"
                           height="auto"
                           headerToolbar={{
@@ -116,8 +181,12 @@ function App() {
                                 width: '100%',
                                 height: '100%',
                               }}
+                              onMouseEnter={(e) => showTooltip(e, eventInfo)}
+                              onMouseLeave={hideTooltip}
                             >
-                              <span className="px-2 truncate">{eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}</span>
+                              <span className="px-2 truncate">
+                                {eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}
+                              </span>
                             </div>
                           )}
                         />
@@ -129,6 +198,28 @@ function App() {
             </div>
           } />
         </Routes>
+
+        {/* ツールチップ */}
+        {isTooltipVisible && tooltipContent && (
+          <div
+            ref={tooltipRef}
+            className="tooltip"
+            style={{
+              position: 'absolute',
+              left: `${tooltipPosition.left}px`,
+              top: `${tooltipPosition.top}px`,
+              zIndex: 1000,
+            }}
+            onMouseEnter={handleTooltipMouseEnter}
+            onMouseLeave={handleTooltipMouseLeave}
+          >
+            <strong>{tooltipContent.trackFullName}</strong><br />
+            <a href={`/track/${tooltipContent.trackId}`} target="_blank">サーキット詳細</a><br />
+            <a href={tooltipContent.raceUrl} target="_blank" style={!tooltipContent.raceUrl ? { pointerEvents: 'none', color: 'gray' } : {}}>レース詳細</a><br />
+            <span>形式: {tooltipContent.raceFormat}</span><br />
+            <span>{tooltipContent.raceUrl || 'レースURL: なし'}</span>
+          </div>
+        )}
       </div>
     </Router>
   );
