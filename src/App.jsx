@@ -4,6 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import axios from 'axios';
 import './App.css';
 import Header from './components/Header';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NewRaceForm from './components/NewRaceForm';
 
 // カテゴリ別の色設定
 const categoryColors = {
@@ -45,83 +47,90 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-image min-h-screen">
-      <Header />
-      <div className="py-8 px-4 pt-24">
-        <div className="max-w-5xl mx-auto bg-transparent">
-          <div className="bg-transparent">
-            <div className="p-4">
-              {isLoading ? (
-                <div className="flex justify-center items-center h-64">
-                  <div className="relative">
-                    <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                    <div className="mt-4 text-gray-600">読み込み中...</div>
+    <Router>
+      <div className="bg-image min-h-screen">
+        <Header />
+        <Routes>
+          <Route path="/new-race" element={<NewRaceForm />} />
+          <Route path="/" element={
+            <div className="py-8 px-4 pt-24">
+              <div className="max-w-5xl mx-auto bg-transparent">
+                <div className="bg-transparent">
+                  <div className="p-4">
+                    {isLoading ? (
+                      <div className="flex justify-center items-center h-64">
+                        <div className="relative">
+                          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                          <div className="mt-4 text-gray-600">読み込み中...</div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {error && (
+                          <div className="mb-4 p-4 bg-red-100 rounded-lg border border-red-300 text-red-700 text-center">
+                            {error}
+                            <button
+                              onClick={fetchSchedules}
+                              disabled={isLoading}
+                              className="block mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg"
+                            >
+                              再試行
+                            </button>
+                          </div>
+                        )}
+
+                        <FullCalendar
+                          plugins={[dayGridPlugin]}
+                          events={events.map(event => ({
+                            title: event.title,
+                            start: event.start_date,
+                            end: event.end_date,
+                            extendedProps: {
+                              trackFullName: event.Track.fullName,
+                              trackShortName: event.Track.shortName,
+                              trackPrefecture: event.Track.prefecture,
+                            },
+                          }))}
+                          locale="ja"
+                          height="auto"
+                          headerToolbar={{
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: ''
+                          }}
+                          buttonText={{
+                            today: '今日',
+                            month: '月'
+                          }}
+                          dayCellClassNames="h-[200px] p-2 overflow-y-auto"
+                          dayHeaderClassNames="py-2 text-gray-500 text-sm font-medium"
+                          eventContent={(eventInfo) => (
+                            <div
+                              className="w-full h-full py-1 my-1 flex items-center rounded-md text-white text-xs cursor-pointer transition duration-200 ease-in-out"
+                              style={{
+                                backgroundColor: eventInfo.event.backgroundColor,
+                                padding: '4px',
+                                borderRadius: '6px',
+                                textAlign: 'center',
+                                display: 'block',
+                                width: '100%',
+                                height: '100%',
+                              }}
+                            >
+                              <span className="px-2 truncate">{eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}</span>
+                            </div>
+                          )}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
-              ) : (
-                <>
-                  {error && (
-                    <div className="mb-4 p-4 bg-red-100 rounded-lg border border-red-300 text-red-700 text-center">
-                      {error}
-                      <button
-                        onClick={fetchSchedules}
-                        disabled={isLoading}
-                        className="block mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg"
-                      >
-                        再試行
-                      </button>
-                    </div>
-                  )}
-
-                  <FullCalendar
-                    plugins={[dayGridPlugin]}
-                    events={events.map(event => ({
-                      title: event.title,
-                      start: event.start_date,
-                      end: event.end_date,
-                      extendedProps: {
-                        trackFullName: event.Track.fullName,
-                        trackShortName: event.Track.shortName,
-                        trackPrefecture: event.Track.prefecture,
-                      },
-                    }))}
-                    locale="ja"
-                    height="auto"
-                    headerToolbar={{
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: ''
-                    }}
-                    buttonText={{
-                      today: '今日',
-                      month: '月'
-                    }}
-                    dayCellClassNames="h-[200px] p-2 overflow-y-auto"
-                    dayHeaderClassNames="py-2 text-gray-500 text-sm font-medium"
-                    eventContent={(eventInfo) => (
-                      <div
-                        className="w-full h-full py-1 my-1 flex items-center rounded-md text-white text-xs cursor-pointer transition duration-200 ease-in-out"
-                        style={{
-                          backgroundColor: eventInfo.event.backgroundColor,
-                          padding: '4px',
-                          borderRadius: '6px',
-                          textAlign: 'center',
-                          display: 'block',
-                          width: '100%',
-                          height: '100%',
-                        }}
-                      >
-                        <span className="px-2 truncate">{eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}</span>
-                      </div>
-                    )}
-                  />
-                </>
-              )}
+              </div>
             </div>
-          </div>
-        </div>
+          } />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
