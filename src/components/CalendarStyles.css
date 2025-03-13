@@ -1,0 +1,357 @@
+/* カレンダー全体のスタイル */
+.fc {
+  background-color: rgba(255, 255, 255, 0.98);
+  height: 100vh;
+  width: calc(100% - 60px);
+  margin: 0 auto;
+  padding: 0;
+  overflow: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+/* カレンダーのヘッダー */
+.fc-header-toolbar {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 16px 20px !important;
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid #eaeaea;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.fc-toolbar-title {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #333;
+  letter-spacing: -0.5px;
+}
+
+/* ボタンスタイル */
+.fc-button {
+  background: linear-gradient(135deg, #4a6cf7 0%, #2b50ed 100%) !important;
+  border: none !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 10px rgba(43, 80, 237, 0.2) !important;
+  transition: all 0.2s ease !important;
+}
+
+.fc-button:hover {
+  background: linear-gradient(135deg, #3a5ce6 0%, #1a40dc 100%) !important;
+  box-shadow: 0 4px 12px rgba(43, 80, 237, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+.fc-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(43, 80, 237, 0.2) !important;
+}
+
+.fc-button-active {
+  background: linear-gradient(135deg, #3a5ce6 0%, #1a40dc 100%) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 曜日ヘッダー */
+.fc-col-header {
+  background-color: #f8f9fa;
+}
+
+.fc-col-header-cell {
+  padding: 12px 0 !important;
+}
+
+.fc-col-header-cell-cushion {
+  color: #555 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  padding: 8px !important;
+}
+
+/* 土日の色分け */
+.fc-day-sat .fc-col-header-cell-cushion {
+  color: #4a6cf7 !important;
+}
+
+.fc-day-sun .fc-col-header-cell-cushion {
+  color: #e53e3e !important;
+}
+
+/* 日付セル */
+.fc-daygrid-day {
+  padding: 5px !important;
+  height: 120px !important;
+  transition: background-color 0.2s ease;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #f8f9fa !important;
+}
+
+.fc-daygrid-day-number {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  padding: 6px 10px !important;
+  text-decoration: none !important;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.fc-daygrid-day-number:hover {
+  background-color: #eaeaea;
+}
+
+/* 今日の日付 */
+.fc-day-today {
+  background-color: rgba(74, 108, 247, 0.05) !important;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  background-color: #4a6cf7;
+  color: white !important;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 土日の背景色 */
+.fc-day-sat {
+  background-color: rgba(74, 108, 247, 0.03) !important;
+}
+
+.fc-day-sun {
+  background-color: rgba(229, 62, 62, 0.03) !important;
+}
+
+/* イベントスタイル */
+.fc-event {
+  border: none !important;
+  padding: 4px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
+  margin: 2px 0 !important;
+}
+
+.fc-event:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* レース形式別の色設定 */
+/* スプリント（赤） */
+.fc-event[style*="background-color: rgb(255, 77, 77)"],
+.fc-event[style*="background-color: #ff4d4d"] {
+  background: linear-gradient(135deg, #ff4d4d 0%, #e53e3e 100%) !important;
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.2) !important;
+}
+
+.fc-event[style*="background-color: rgb(255, 77, 77)"]:hover,
+.fc-event[style*="background-color: #ff4d4d"]:hover {
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3) !important;
+}
+
+/* 耐久（青） */
+.fc-event[style*="background-color: rgb(77, 166, 255)"],
+.fc-event[style*="background-color: #4da6ff"] {
+  background: linear-gradient(135deg, #4da6ff 0%, #3a8ad6 100%) !important;
+  box-shadow: 0 2px 6px rgba(58, 138, 214, 0.2) !important;
+}
+
+.fc-event[style*="background-color: rgb(77, 166, 255)"]:hover,
+.fc-event[style*="background-color: #4da6ff"]:hover {
+  box-shadow: 0 4px 8px rgba(58, 138, 214, 0.3) !important;
+}
+
+/* MIX（緑） */
+.fc-event[style*="background-color: rgb(76, 175, 80)"],
+.fc-event[style*="background-color: #4CAF50"] {
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%) !important;
+  box-shadow: 0 2px 6px rgba(56, 142, 60, 0.2) !important;
+}
+
+.fc-event[style*="background-color: rgb(76, 175, 80)"]:hover,
+.fc-event[style*="background-color: #4CAF50"]:hover {
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.3) !important;
+}
+
+/* カスタムイベントスタイル */
+.calendar-event {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  border-radius: 6px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendar-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-event-sprint {
+  background: linear-gradient(135deg, #ff4d4d 0%, #e53e3e 100%);
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.2);
+}
+
+.calendar-event-endurance {
+  background: linear-gradient(135deg, #4da6ff 0%, #3a8ad6 100%);
+  box-shadow: 0 2px 6px rgba(58, 138, 214, 0.2);
+}
+
+.calendar-event-mix {
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+  box-shadow: 0 2px 6px rgba(56, 142, 60, 0.2);
+}
+
+/* ツールチップのスタイル */
+.tooltip {
+  background-color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  position: absolute;
+  min-width: 250px;
+  font-size: 14px;
+  line-height: 1.6;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tooltip strong {
+  font-size: 16px;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 8px;
+}
+
+.tooltip a {
+  color: #4a6cf7;
+  text-decoration: none;
+  display: block;
+  margin: 6px 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  background-color: #f8f9fa;
+}
+
+.tooltip a:hover {
+  background-color: #eaeaea;
+  color: #2b50ed;
+}
+
+.tooltip span {
+  display: block;
+  margin: 4px 0;
+  color: #555;
+}
+
+/* レジェンドスタイル */
+.legend-container {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.legend-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  margin-right: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-label {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ツールチップボタンのスタイル */
+.tooltip-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.tooltip-button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tooltip-button:hover {
+  background-color: #e9ecef;
+}
+
+.circuit-detail-button {
+  background-color: #4da6ff;
+  color: white;
+  border-color: #4da6ff;
+}
+
+.circuit-detail-button:hover {
+  background-color: #3a8ad6;
+  border-color: #3a8ad6;
+}
+
+.edit-button {
+  background-color: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+}
+
+.edit-button:hover {
+  background-color: #d97706;
+  border-color: #d97706;
+} 

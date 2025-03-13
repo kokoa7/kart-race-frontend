@@ -10,6 +10,8 @@ import NewTrackForm from './components/NewTrackForm';
 import TrackDetail from './components/TrackDetail';
 import Legend from './components/Legend';
 import { useParams } from 'react-router-dom';
+import EditRaceForm from './components/EditRaceForm';
+import TrackList from './components/TrackList';
 
 // レース形式別の色設定
 const raceFormatColors = {
@@ -44,17 +46,17 @@ function App() {
         title: event.title,
         start: event.startDate,
         end: event.endDate,
-        backgroundColor: getRaceFormatColor(event.raceFormat.id),
+        backgroundColor: getRaceFormatColor(event.raceFormat),
         borderColor: 'transparent',
         textColor: 'white',
         extendedProps: {
-          raceFormat: event.raceFormat.name,
-          raceFormatId: event.raceFormat.id,
+          raceFormat: event.RaceFormat.name,
+          raceFormatId: event.raceFormat,
           trackFullName: event.Track.fullName,
           trackShortName: event.Track.shortName,
-          trackPrefecture: event.Track.prefecture,
+          trackPrefecture: event.Track?.prefecture,
           raceUrl: event.raceUrl,
-          trackId: event.Track.id, // トラックIDを追加
+          trackId: event.Track.id,
         },
       })));
     } catch (error) {
@@ -76,6 +78,7 @@ function App() {
       trackId: eventInfo.event.extendedProps.trackId,
       raceUrl: eventInfo.event.extendedProps.raceUrl,
       raceFormat: eventInfo.event.extendedProps.raceFormat,
+      eventId: eventInfo.event.id,
     });
 
     // ツールチップの位置を調整
@@ -123,6 +126,8 @@ function App() {
           <Route path="/new-race" element={<NewRaceForm onClose={() => {}} />} />
           <Route path="/new-track" element={<NewTrackForm onClose={() => {}} />} />
           <Route path="/track/:trackId" element={<TrackDetail />} />
+          <Route path="/edit-race/:raceId" element={<EditRaceForm />} />
+          <Route path="/tracks" element={<TrackList />} />
           <Route path="/" element={
             <div className="py-8 px-4 pt-24">
               <div className="max-w-5xl mx-auto bg-transparent">
@@ -216,6 +221,7 @@ function App() {
             <strong>{tooltipContent.trackFullName}</strong><br />
             <a href={`/track/${tooltipContent.trackId}`} target="_blank">サーキット詳細</a><br />
             <a href={tooltipContent.raceUrl} target="_blank" style={!tooltipContent.raceUrl ? { pointerEvents: 'none', color: 'gray' } : {}}>レース詳細</a><br />
+            <a href={`/edit-race/${tooltipContent.eventId}`} className="text-blue-600 hover:text-blue-800">レース編集</a><br />
             <span>形式: {tooltipContent.raceFormat}</span><br />
             <span>{tooltipContent.raceUrl || 'レースURL: なし'}</span>
           </div>

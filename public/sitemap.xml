@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- トップページ -->
+  <url>
+    <loc>https://kart-race-frontend.vercel.app/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- サーキット一覧ページ -->
+  <url>
+    <loc>https://kart-race-frontend.vercel.app/tracks</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- 新規レース登録ページ -->
+  <url>
+    <loc>https://kart-race-frontend.vercel.app/new-race</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- 新規サーキット登録ページ -->
+  <url>
+    <loc>https://kart-race-frontend.vercel.app/new-track</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset> 

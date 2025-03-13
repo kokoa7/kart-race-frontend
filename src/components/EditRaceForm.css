@@ -1,0 +1,137 @@
+.edit-race-container {
+  padding: 2rem 1rem;
+  padding-top: 6rem;
+}
+
+.edit-race-form-wrapper {
+  max-width: 32rem;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.edit-race-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  appearance: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  color: #4a5568;
+  line-height: 1.25;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.error-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #fed7d7;
+  border-radius: 0.5rem;
+  border: 1px solid #feb2b2;
+  color: #c53030;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #4299e1;
+}
+
+.btn-primary:hover {
+  background-color: #2b6cb0;
+}
+
+.btn-danger {
+  background-color: #f56565;
+}
+
+.btn-danger:hover {
+  background-color: #c53030;
+}
+
+.btn-secondary {
+  background-color: #718096;
+}
+
+.btn-secondary:hover {
+  background-color: #4a5568;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16rem;
+  padding-top: 6rem;
+}
+
+.loading-spinner {
+  position: relative;
+}
+
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 4px solid #e2e8f0;
+  border-top-color: #4299e1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-top: 1rem;
+  color: #718096;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 

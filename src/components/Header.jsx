@@ -16,16 +16,30 @@ function Header() {
     window.open('/new-track', '_blank');
   };
 
+  const handleTrackListClick = () => {
+    window.open('/tracks', '_blank');
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-branding">
-          <div className="navbar-logo">
+          <div className="navbar-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
             <span className="logo-main">Enjoy Rental Kart Race</span>
             <h1 className="navbar-title">Race Schedule</h1>
           </div>
         </div>
         <div className="navbar-menu">
+          <button
+            onClick={handleTrackListClick}
+            className="navbar-item"
+          >
+            サーキット一覧
+          </button>
           <button
             onClick={handleNewTrackClick}
             className="navbar-item"

@@ -140,3 +140,39 @@
     font-size: 0.8rem;
   }
 }
+
+.header-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  /* 背景色を不透明な濃い青に変更 */
+  background-color: #2563eb;
+  /* 白い境界線を追加 */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600; /* フォントの太さを増加 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* テキストに微細な影を追加 */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.header-button:hover {
+  /* ホバー時の背景色も不透明に */
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  /* ホバー時の境界線を明るく */
+  border-color: rgba(255, 255, 255, 0.4);
+  /* ホバー時により強い影効果 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* アクティブ（クリック）時のスタイル */
+.header-button:active {
+  transform: translateY(0);
+  background-color: #1e40af;
+}
