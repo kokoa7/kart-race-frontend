@@ -489,6 +489,7 @@ function AppContent() {
                             </span>
                           </div>
                         )}
+                        style={{ width: '100%' }}
                       />
                     )}
                   </>

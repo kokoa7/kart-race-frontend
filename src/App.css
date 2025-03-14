@@ -29,13 +29,11 @@ body {
 }
 
 .fc {
+  width: 100%; /* カレンダーの幅を100%に設定 */
   background-color: rgba(255, 255, 255, 0.98);
-  height: 100vh;
-  width: calc(100% - 60px); /* 最大幅の制限を削除し、常に左右30pxずつの余白を確保 */
-  margin: 0 auto;
-  padding: 0;
-  overflow: auto;
-  border-radius: 12px; /* 角を丸める */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
 }
 
 .fc-theme-standard td {
@@ -504,10 +502,12 @@ body {
 .home-container {
   padding: 32px 16px;
   padding-top: 96px;
+  width: 100%;
 }
 
 .calendar-wrapper {
-  max-width: 1024px;
+  max-width: 1280px; /* 最大幅を拡大 */
+  width: 100%; /* 幅を100%に設定 */
   margin: 0 auto;
   background-color: transparent;
 }
@@ -515,6 +515,7 @@ body {
 .calendar-content {
   background-color: transparent;
   padding: 16px;
+  width: 100%; /* 幅を100%に設定 */
 }
 
 /* ローディング表示 */
@@ -598,4 +599,22 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+/* レスポンシブ対応 */
+@media (min-width: 1024px) {
+  .calendar-wrapper {
+    max-width: 1440px; /* 大きい画面ではさらに幅を広げる */
+  }
+  
+  .home-container {
+    padding: 32px 24px;
+    padding-top: 96px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .calendar-wrapper {
+    max-width: 1680px; /* 超大画面ではさらに幅を広げる */
+  }
 }
