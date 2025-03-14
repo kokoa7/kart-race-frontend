@@ -428,81 +428,71 @@ function AppContent() {
         <Route path="/schedules/:raceId" element={<EditRaceForm />} />
         <Route path="/tracks" element={<TrackList />} />
         <Route path="/" element={
-          <div className="py-8 px-4 pt-24">
-            <div className="max-w-5xl mx-auto bg-transparent">
-              <div className="bg-transparent">
-                <div className="p-4">
-                  {isLoading ? (
-                    <div className="flex justify-center items-center h-64">
-                      <div className="relative">
-                        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                        <div className="mt-4 text-gray-600">読み込み中...</div>
+          <div className="home-container">
+            <div className="calendar-wrapper">
+              <div className="calendar-content">
+                {isLoading ? (
+                  <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <div className="loading-text">読み込み中...</div>
+                  </div>
+                ) : (
+                  <>
+                    {error && (
+                      <div className="error-message">
+                        {error}
+                        <button
+                          onClick={fetchSchedules}
+                          disabled={isLoading}
+                          className="retry-button"
+                        >
+                          再試行
+                        </button>
                       </div>
-                    </div>
-                  ) : (
-                    <>
-                      {error && (
-                        <div className="mb-4 p-4 bg-red-100 rounded-lg border border-red-300 text-red-700 text-center">
-                          {error}
-                          <button
-                            onClick={fetchSchedules}
-                            disabled={isLoading}
-                            className="block mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg"
+                    )}
+
+                    {/* 凡例コンポーネントを使用 */}
+                    <Legend raceFormatColors={raceFormatColors} />
+
+                    {isMobile ? (
+                      // モバイル用表示
+                      renderMobileView()
+                    ) : (
+                      // PC用表示（既存のカレンダー）
+                      <FullCalendar
+                        plugins={[dayGridPlugin]}
+                        events={events}
+                        locale="ja"
+                        height="auto"
+                        headerToolbar={{
+                          left: 'prev,next today',
+                          center: 'title',
+                          right: ''
+                        }}
+                        buttonText={{
+                          today: '今日',
+                          month: '月'
+                        }}
+                        dayCellClassNames="calendar-day-cell"
+                        dayHeaderClassNames="calendar-day-header"
+                        eventContent={(eventInfo) => (
+                          <div
+                            className="calendar-event"
+                            style={{
+                              backgroundColor: eventInfo.event.backgroundColor,
+                            }}
+                            onMouseEnter={(e) => showTooltip(e, eventInfo)}
+                            onMouseLeave={hideTooltip}
                           >
-                            再試行
-                          </button>
-                        </div>
-                      )}
-
-                      {/* 凡例コンポーネントを使用 */}
-                      <Legend raceFormatColors={raceFormatColors} />
-
-                      {isMobile ? (
-                        // モバイル用表示
-                        renderMobileView()
-                      ) : (
-                        // PC用表示（既存のカレンダー）
-                        <FullCalendar
-                          plugins={[dayGridPlugin]}
-                          events={events}
-                          locale="ja"
-                          height="auto"
-                          headerToolbar={{
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: ''
-                          }}
-                          buttonText={{
-                            today: '今日',
-                            month: '月'
-                          }}
-                          dayCellClassNames="h-[200px] p-2 overflow-y-auto"
-                          dayHeaderClassNames="py-2 text-gray-500 text-sm font-medium"
-                          eventContent={(eventInfo) => (
-                            <div
-                              className="w-full h-full py-1 my-1 flex items-center rounded-md text-white text-xs cursor-pointer transition duration-200 ease-in-out"
-                              style={{
-                                backgroundColor: eventInfo.event.backgroundColor,
-                                padding: '4px',
-                                borderRadius: '6px',
-                                textAlign: 'center',
-                                display: 'block',
-                                width: '100%',
-                                height: '100%',
-                              }}
-                              onMouseEnter={(e) => showTooltip(e, eventInfo)}
-                              onMouseLeave={hideTooltip}
-                            >
-                              <span className="px-2 truncate">
-                                {eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}
-                              </span>
-                            </div>
-                          )}
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
+                            <span className="calendar-event-text">
+                              {eventInfo.event.extendedProps.trackShortName} - {eventInfo.event.title}
+                            </span>
+                          </div>
+                        )}
+                      />
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
