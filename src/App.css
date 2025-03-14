@@ -288,3 +288,214 @@ body {
     width: 100%;
   }
 }
+
+/* コンパクトなスケジュールリスト */
+.compact-schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compact-schedule-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #e0e0e0;
+  min-height: 40px;
+}
+
+.compact-schedule-item:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.compact-schedule-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.compact-schedule-format {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+.compact-schedule-content {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.compact-schedule-track {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4da6ff;
+  margin-bottom: 2px;
+}
+
+.compact-schedule-title {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* モバイルツールチップ */
+.mobile-tooltip-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.mobile-tooltip {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.mobile-tooltip-header strong {
+  font-size: 16px;
+  color: #555;
+}
+
+.mobile-tooltip-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.mobile-tooltip-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.mobile-tooltip-track {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 5px 0;
+}
+
+.mobile-tooltip-format {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 15px 0;
+}
+
+.mobile-tooltip-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap; /* ボタンが多い場合は折り返し */
+}
+
+.mobile-tooltip-button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #555;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.mobile-tooltip-button.primary {
+  background-color: #4da6ff;
+  color: white;
+  border-color: #4da6ff;
+}
+
+.mobile-tooltip-button.secondary {
+  background-color: #f0f9ff;
+  color: #3b82f6;
+  border-color: #bfdbfe;
+}
+
+.mobile-tooltip-button.disabled {
+  background-color: #f5f5f5;
+  color: #aaa;
+  cursor: not-allowed;
+  border-color: #e0e0e0;
+}
+
+.mobile-tooltip-button:hover:not(.disabled) {
+  transform: translateY(-1px);
+}
+
+.mobile-tooltip-button.primary:hover {
+  background-color: #3a8ad6;
+}
+
+.mobile-tooltip-button.secondary:hover {
+  background-color: #dbeafe;
+}
+
+/* レースURL情報 */
+.mobile-tooltip-url-info {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+  font-size: 12px;
+  color: #666;
+}
+
+.mobile-tooltip-url-label {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+.mobile-tooltip-url-link {
+  color: #4da6ff;
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.mobile-tooltip-url-link:hover {
+  text-decoration: underline;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 360px) {
+  .mobile-tooltip-buttons {
+    flex-direction: column;
+  }
+  
+  .mobile-tooltip-button {
+    width: 100%;
+  }
+}

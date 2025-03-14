@@ -39,6 +39,11 @@ function AppContent() {
   const tooltipRef = useRef(null);
   const hideTimeoutRef = useRef(null);
   const location = useLocation(); // Router の中で使用
+  const [mobileTooltipContent, setMobileTooltipContent] = useState(null);
+  const [mobileTooltipPosition, setMobileTooltipPosition] = useState({ left: 0, top: 0 });
+  const [isMobileTooltipVisible, setIsMobileTooltipVisible] = useState(false);
+  const mobileTooltipRef = useRef(null);
+  const mobileHideTimeoutRef = useRef(null);
 
   // ウィンドウサイズの変更を検知
   useEffect(() => {
@@ -199,7 +204,55 @@ function AppContent() {
     return `${month}/${day}(${weekday})`;
   };
 
-  // モバイル用のリスト表示
+  // モバイル用ツールチップを表示する関数
+  const showMobileTooltip = (e, event) => {
+    // ツールチップの内容を設定
+    setMobileTooltipContent({
+      trackFullName: event.extendedProps.trackFullName,
+      trackId: event.extendedProps.trackId,
+      raceUrl: event.extendedProps.raceUrl,
+      raceFormat: event.extendedProps.raceFormat,
+      eventId: event.id,
+      title: event.title,
+      date: formatDate(event.start),
+    });
+
+    // ツールチップの位置を調整
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMobileTooltipPosition({
+      left: rect.left + window.scrollX,
+      top: rect.bottom + window.scrollY,
+    });
+
+    // ツールチップを表示
+    setIsMobileTooltipVisible(true);
+
+    // 既存のタイマーをクリア
+    if (mobileHideTimeoutRef.current) {
+      clearTimeout(mobileHideTimeoutRef.current);
+      mobileHideTimeoutRef.current = null;
+    }
+  };
+
+  // モバイル用ツールチップを非表示にする関数
+  const hideMobileTooltip = () => {
+    mobileHideTimeoutRef.current = setTimeout(() => {
+      setIsMobileTooltipVisible(false);
+    }, 300);
+  };
+
+  const handleMobileTooltipMouseEnter = () => {
+    if (mobileHideTimeoutRef.current) {
+      clearTimeout(mobileHideTimeoutRef.current);
+      mobileHideTimeoutRef.current = null;
+    }
+  };
+
+  const handleMobileTooltipMouseLeave = () => {
+    setIsMobileTooltipVisible(false);
+  };
+
+  // モバイル用のコンパクトなリスト表示
   const renderMobileView = () => {
     // 選択された年と月でイベントをフィルタリング
     const filteredEvents = selectedMonth === -1 
@@ -233,33 +286,26 @@ function AppContent() {
         </div>
         
         {filteredEvents.length > 0 ? (
-          <div className="schedule-list">
+          <div className="compact-schedule-list">
             {filteredEvents.map(event => (
-              <div key={event.id} className="schedule-item">
-                <div className="schedule-date">
+              <div 
+                key={event.id} 
+                className="compact-schedule-item"
+                onClick={(e) => showMobileTooltip(e, event)}
+              >
+                <div className="compact-schedule-date">
                   {formatDate(event.start)}
                 </div>
-                <div className="schedule-content">
-                  <h4 className="schedule-title">{event.title}</h4>
-                  <div className="schedule-details">
-                    <span 
-                      className="schedule-format" 
-                      style={{ 
-                        backgroundColor: event.backgroundColor
-                      }}
-                    >
-                      {event.extendedProps.raceFormat}
-                    </span>
-                    
-                    <div className="schedule-url">
-                      <a 
-                        href={`/schedules/${event.id}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        レース編集 <span className="link-arrow">→</span>
-                      </a>
-                    </div>
+                <div 
+                  className="compact-schedule-format" 
+                  style={{ backgroundColor: event.backgroundColor }}
+                ></div>
+                <div className="compact-schedule-content">
+                  <div className="compact-schedule-track">
+                    {event.extendedProps.trackShortName}
+                  </div>
+                  <div className="compact-schedule-title">
+                    {event.title}
                   </div>
                 </div>
               </div>
@@ -268,6 +314,104 @@ function AppContent() {
         ) : (
           <div className="empty-schedule">
             <p>選択した期間のレース予定はありません。</p>
+          </div>
+        )}
+        
+        {/* モバイル用ツールチップ */}
+        {isMobileTooltipVisible && mobileTooltipContent && (
+          <div
+            ref={mobileTooltipRef}
+            className="mobile-tooltip"
+            style={{
+              position: 'fixed',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 1000,
+            }}
+            onMouseEnter={handleMobileTooltipMouseEnter}
+            onMouseLeave={handleMobileTooltipMouseLeave}
+          >
+            <div className="mobile-tooltip-header">
+              <strong>{mobileTooltipContent.date}</strong>
+              <button 
+                className="mobile-tooltip-close"
+                onClick={() => setIsMobileTooltipVisible(false)}
+              >
+                ×
+              </button>
+            </div>
+            
+            <h3 className="mobile-tooltip-title">{mobileTooltipContent.title}</h3>
+            
+            <div className="mobile-tooltip-info">
+              <div className="mobile-tooltip-info-item">
+                <span className="mobile-tooltip-label">サーキット:</span>
+                <span className="mobile-tooltip-value">
+                  {mobileTooltipContent.trackFullName}
+                  {mobileTooltipContent.trackPrefecture && ` (${mobileTooltipContent.trackPrefecture})`}
+                </span>
+              </div>
+              
+              <div className="mobile-tooltip-info-item">
+                <span className="mobile-tooltip-label">レース形式:</span>
+                <span className="mobile-tooltip-value">{mobileTooltipContent.raceFormat}</span>
+              </div>
+            </div>
+            
+            <div className="mobile-tooltip-buttons">
+              <a 
+                href={`/track/${mobileTooltipContent.trackId}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="mobile-tooltip-button"
+              >
+                サーキット詳細
+              </a>
+              
+              {mobileTooltipContent.raceUrl ? (
+                <a 
+                  href={mobileTooltipContent.raceUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="mobile-tooltip-button secondary"
+                  title={`外部リンク: ${mobileTooltipContent.raceUrl}`}
+                >
+                  レース詳細
+                </a>
+              ) : (
+                <span 
+                  className="mobile-tooltip-button disabled"
+                  title="レース詳細URLが設定されていません"
+                >
+                  レース詳細
+                </span>
+              )}
+              
+              <a 
+                href={`/schedules/${mobileTooltipContent.eventId}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="mobile-tooltip-button primary"
+              >
+                レース編集
+              </a>
+            </div>
+            
+            {/* レースURLの表示 */}
+            {mobileTooltipContent.raceUrl && (
+              <div className="mobile-tooltip-url-info">
+                <span className="mobile-tooltip-url-label">レース詳細URL:</span>
+                <a 
+                  href={mobileTooltipContent.raceUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="mobile-tooltip-url-link"
+                >
+                  {mobileTooltipContent.raceUrl}
+                </a>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -386,6 +530,14 @@ function AppContent() {
           <span>形式: {tooltipContent.raceFormat}</span><br />
           <span>{tooltipContent.raceUrl || 'レースURL: なし'}</span>
         </div>
+      )}
+
+      {/* モバイルツールチップの背景オーバーレイ */}
+      {isMobileTooltipVisible && (
+        <div 
+          className="mobile-tooltip-overlay"
+          onClick={() => setIsMobileTooltipVisible(false)}
+        ></div>
       )}
     </div>
   );
