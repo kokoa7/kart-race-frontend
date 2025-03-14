@@ -618,3 +618,15 @@ body {
     max-width: 1680px; /* 超大画面ではさらに幅を広げる */
   }
 }
+
+/* SEO対策：視覚的に非表示だがスクリーンリーダーには読み上げられる要素 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

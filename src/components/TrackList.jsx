@@ -38,6 +38,17 @@ const TrackList = () => {
     navigate(`/track/${trackId}`);
   };
 
+  // サーキット一覧画面のタイトルとメタディスクリプションを設定
+  useEffect(() => {
+    document.title = "サーキット一覧 | エンジョイレンタルカートレース";
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', '全国のレンタルカートサーキット一覧。都道府県別に検索でき、各サーキットの詳細情報を確認できます。');
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <div className="loading-container">
@@ -56,7 +67,10 @@ const TrackList = () => {
   }
 
   return (
-    <div className="track-list-container">
+    <div className="track-list-container" role="main" aria-label="サーキット一覧">
+      {/* 見出しを追加（視覚的に非表示にしてSEO対策） */}
+      <h1 className="visually-hidden">レンタルカートサーキット一覧</h1>
+      
       <div className="track-list-content">
         <div className="track-list-header">
           <div className="title-container">

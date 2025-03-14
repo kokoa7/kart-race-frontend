@@ -1,38 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Rental Kart Race Schedule Application"
-    />
+    <meta name="theme-color" content="#4da6ff" />
+    
+    <!-- SEO向けメタタグの追加 -->
+    <meta name="description" content="エンジョイレンタルカートレース - レンタルカートのレース情報やサーキット情報を提供するポータルサイトです。全国のレンタルカートレースのスケジュールを検索・閲覧・登録できます。" />
+    <meta name="keywords" content="レンタルカート,カートレース,レーシングカート,スポーツカート,サーキット,レース情報,スケジュール,カート,モータースポーツ" />
+    <meta name="author" content="エンジョイレンタルカートレース" />
+    
+    <!-- OGP設定 -->
+    <meta property="og:title" content="エンジョイレンタルカートレース | レンタルカートレース情報ポータル" />
+    <meta property="og:description" content="全国のレンタルカートレース情報を提供するポータルサイト。レーススケジュールやサーキット情報を簡単に検索・閲覧・登録できます。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-domain.com/" />
+    <meta property="og:image" content="https://your-domain.com/og-image.jpg" />
+    <meta property="og:site_name" content="エンジョイレンタルカートレース" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="エンジョイレンタルカートレース | レンタルカートレース情報ポータル" />
+    <meta name="twitter:description" content="全国のレンタルカートレース情報を提供するポータルサイト。レーススケジュールやサーキット情報を簡単に検索・閲覧・登録できます。" />
+    <meta name="twitter:image" content="https://your-domain.com/og-image.jpg" />
+    
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <!-- Google Fonts -->
+    
+    <!-- キャノニカルURLの設定 -->
+    <link rel="canonical" href="https://your-domain.com/" />
+    
+    <!-- フォントの最適化 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
     
-    <title>Rental Kart Race Schedule</title>
+    <title>エンジョイレンタルカートレース | レンタルカートレース情報ポータル</title>
+    
+    <!-- 構造化データ（JSON-LD） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "エンジョイレンタルカートレース",
+        "url": "https://your-domain.com/",
+        "description": "全国のレンタルカートレース情報を提供するポータルサイト",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://your-domain.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png">
+    
+    <!-- 標準ファビコン -->
+    <link rel="icon" type="image/png" sizes="96x96" href="%PUBLIC_URL%/favicon-96x96.png">
+    
+    <!-- その他のファビコン設定（オプション） -->
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
+    
+    <!-- iOS向け設定 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="エンジョイレンタルカートレース">
+    
+    <!-- Microsoft Tile -->
+    <meta name="msapplication-TileColor" content="#4da6ff">
+    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/mstile-144x144.png">
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>このアプリケーションを実行するには、JavaScriptを有効にする必要があります。</noscript>
     <div id="root"></div>
     <!--
       This HTML file is a template.

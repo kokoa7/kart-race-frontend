@@ -12,6 +12,17 @@ function NewRaceForm({ onClose }) {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // 新規スケジュール登録画面のタイトルとメタディスクリプションを設定
+  useEffect(() => {
+    document.title = "新規スケジュール登録 | エンジョイレンタルカートレース";
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'レンタルカートレースの新規スケジュールを登録するフォーム。サーキット選択、レース名、開催日などを入力できます。');
+    }
+  }, []);
+
   const raceFormats = [
     { id: 0, name: 'スプリント' },
     { id: 1, name: '耐久' },
@@ -113,7 +124,10 @@ function NewRaceForm({ onClose }) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="form-page">
+    <div className="form-page" role="main" aria-label="新規レース登録">
+      {/* 見出しを追加（視覚的に非表示にしてSEO対策） */}
+      <h1 className="visually-hidden">新規レース登録フォーム</h1>
+      
       <div className="form-container">
         <div className="form-header">
           <h2 className="form-title">新規レース登録</h2>

@@ -128,6 +128,20 @@ function EditRaceForm() {
     }
   };
 
+  // スケジュール編集画面のタイトルとメタディスクリプションを設定
+  useEffect(() => {
+    const pageTitle = formData.title 
+      ? `${formData.title} | スケジュール編集 | エンジョイレンタルカートレース` 
+      : 'スケジュール編集 | エンジョイレンタルカートレース';
+    document.title = pageTitle;
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'レンタルカートレースのスケジュール情報を編集するフォーム。レース名、開催日、サーキット、レース形式などを更新できます。');
+    }
+  }, [formData.title]);
+
   if (isLoading) {
     return (
       <div className="loading-container">
@@ -140,7 +154,10 @@ function EditRaceForm() {
   }
 
   return (
-    <div className="edit-race-container">
+    <div className="edit-race-container" role="main" aria-label="レース編集">
+      {/* 見出しを追加（視覚的に非表示にしてSEO対策） */}
+      <h1 className="visually-hidden">レース情報編集フォーム</h1>
+      
       <div className="edit-race-form-wrapper">
         <h2 className="edit-race-title">レース編集</h2>
         

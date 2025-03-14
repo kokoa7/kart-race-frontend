@@ -98,6 +98,17 @@ function AppContent() {
     }
   }, [location.pathname]);
 
+  // ホーム画面のタイトルを設定
+  useEffect(() => {
+    document.title = "スケジュール | エンジョイレンタルカートレース";
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'エンジョイレンタルカートレース - 全国のレンタルカートレース情報を一覧でご確認いただけます。スケジュール、サーキット情報を簡単に検索・登録できます。');
+    }
+  }, []);
+
   const showTooltip = (e, eventInfo) => {
     // ツールチップの内容を設定
     setTooltipContent({
@@ -428,7 +439,10 @@ function AppContent() {
         <Route path="/schedules/:raceId" element={<EditRaceForm />} />
         <Route path="/tracks" element={<TrackList />} />
         <Route path="/" element={
-          <div className="home-container">
+          <div className="home-container" role="main" aria-label="レーススケジュール">
+            {/* 見出しを追加（視覚的に非表示にしてSEO対策） */}
+            <h1 className="visually-hidden">エンジョイレンタルカートレース スケジュール</h1>
+            
             <div className="calendar-wrapper">
               <div className="calendar-content">
                 {isLoading ? (

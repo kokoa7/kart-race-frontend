@@ -151,6 +151,20 @@ const TrackDetail = () => {
     </div>
   );
 
+  // サーキット詳細画面のタイトルとメタディスクリプションを設定
+  useEffect(() => {
+    const title = track 
+      ? `${track.fullName} | サーキット詳細 | エンジョイレンタルカートレース` 
+      : 'サーキット詳細 | エンジョイレンタルカートレース';
+    document.title = title;
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription && track) {
+      metaDescription.setAttribute('content', `${track.fullName}（${track.prefecture}）のサーキット情報と開催レース一覧。レンタルカートレースのスケジュールを確認できます。`);
+    }
+  }, [track]);
+
   if (isLoading) {
     return (
       <div className="loading-container">
@@ -200,7 +214,7 @@ const TrackDetail = () => {
   }
 
   return (
-    <div className="track-detail-container">
+    <div className="track-detail-container" role="main" aria-label="サーキット詳細">
       <div className="track-detail-header">
         <div className="header-content">
           <h1 className="track-title">{track.fullName}</h1>
@@ -217,11 +231,11 @@ const TrackDetail = () => {
 
       <div className="track-detail-content">
         <div className="track-detail-card">
-          <div className="card-section">
-            <h3 className="section-title">
+          <div className="card-section" role="region" aria-label="サーキット情報">
+            <h2 className="section-title">
               <span className="section-icon">ℹ️</span>
               サーキット情報
-            </h3>
+            </h2>
             <div className="info-grid">
               <div className="info-item">
                 <div className="info-label">サーキット名</div>
@@ -253,13 +267,16 @@ const TrackDetail = () => {
             </div>
           </div>
           
-          {renderScheduleSection()}
+          <div className="card-section" role="region" aria-label="開催レース">
+            <h2 className="section-title">開催レース</h2>
+            {renderScheduleSection()}
+          </div>
           
-          <div className="card-section">
-            <h3 className="section-title">
+          <div className="card-section" role="region" aria-label="地図">
+            <h2 className="section-title">
               <span className="section-icon">🗺️</span>
               地図
-            </h3>
+            </h2>
             <div className="map-container">
               {track.fullName && (
                 <iframe

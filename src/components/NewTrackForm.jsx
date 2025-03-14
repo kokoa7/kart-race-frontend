@@ -31,6 +31,17 @@ function NewTrackForm({ onClose }) {
       });
   }, []);
 
+  // 新規サーキット登録画面のタイトルとメタディスクリプションを設定
+  useEffect(() => {
+    document.title = "新規サーキット登録 | エンジョイレンタルカートレース";
+    
+    // SEO対策：メタディスクリプションの設定
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'レンタルカートサーキットの新規登録フォーム。サーキット名、略称、都道府県などの情報を登録できます。');
+    }
+  }, []);
+
   const validateShortName = (value) => {
     // 英字大文字3文字以下のみ許可
     const regex = /^[A-Z]{1,3}$/;
@@ -120,7 +131,10 @@ function NewTrackForm({ onClose }) {
   }
 
   return (
-    <div className="form-page">
+    <div className="form-page" role="main" aria-label="新規サーキット登録">
+      {/* 見出しを追加（視覚的に非表示にしてSEO対策） */}
+      <h1 className="visually-hidden">新規サーキット登録フォーム</h1>
+      
       <div className="form-container">
         <div className="form-header">
           <h2 className="form-title">新規サーキット登録</h2>

@@ -48,10 +48,16 @@ function Header() {
   };
 
   return (
-    <nav className="navbar">
+    <header className="navbar" role="banner">
       <div className="navbar-container">
         <div className="navbar-branding">
-          <div className="navbar-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+          <div 
+            className="navbar-logo" 
+            onClick={handleLogoClick} 
+            style={{ cursor: 'pointer' }}
+            role="link"
+            aria-label="トップページに戻る"
+          >
             <span className="logo-main">Enjoy Rental Kart Race</span>
             <h1 className="navbar-title">Race Schedule</h1>
           </div>
@@ -63,11 +69,12 @@ function Header() {
               className="mobile-menu-button" 
               onClick={toggleMenu}
               aria-label="メニューを開く"
+              aria-expanded={isMenuOpen}
             >
               <span className={`hamburger-icon ${isMenuOpen ? 'open' : ''}`}></span>
             </button>
             
-            <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+            <nav className={`mobile-menu ${isMenuOpen ? 'open' : ''}`} aria-label="モバイルメニュー">
               <button
                 onClick={handleTrackListClick}
                 className="mobile-menu-item"
@@ -86,7 +93,7 @@ function Header() {
               >
                 新規レース登録
               </button>
-            </div>
+            </nav>
             
             {/* オーバーレイ */}
             {isMenuOpen && (
@@ -94,7 +101,7 @@ function Header() {
             )}
           </>
         ) : (
-          <div className="navbar-menu">
+          <nav className="navbar-menu" aria-label="メインメニュー">
             <button
               onClick={handleTrackListClick}
               className="navbar-item"
@@ -113,10 +120,10 @@ function Header() {
             >
               新規レース登録
             </button>
-          </div>
+          </nav>
         )}
       </div>
-    </nav>
+    </header>
   );
 }
 
