@@ -11,19 +11,22 @@ const TrackDetail = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isScheduleLoading, setIsScheduleLoading] = useState(true);
 
+  // トラック情報とスケジュールを別々に取得
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`https://kart-race-api.onrender.com/tracks/${trackId}`);
+        // トラック情報の取得
+        const trackResponse = await axios.get(`https://kart-race-api.onrender.com/tracks/${trackId}`);
+        setTrack(trackResponse.data);
         
-        // データを設定
-        setTrack(response.data);
+        // スケジュール情報の取得（新しいAPI）
+        const schedulesResponse = await axios.get(`https://kart-race-api.onrender.com/schedules/track/${trackId}`);
         
-        // schedules が存在し、配列であることを確認
-        // 配列でない場合や undefined/null の場合は空配列を設定
-        const schedulesData = response.data.schedules;
+        // スケジュールデータが配列であることを確認
+        const schedulesData = schedulesResponse.data;
         setSchedules(Array.isArray(schedulesData) ? schedulesData : []);
         
       } catch (error) {
@@ -31,6 +34,7 @@ const TrackDetail = () => {
         setError('サーキット情報の取得に失敗しました。');
       } finally {
         setIsLoading(false);
+        setIsScheduleLoading(false);
       }
     };
 
@@ -92,7 +96,12 @@ const TrackDetail = () => {
         </div>
       </div>
       
-      {filteredSchedules.length > 0 ? (
+      {isScheduleLoading ? (
+        <div className="loading-content">
+          <div className="loading-spinner"></div>
+          <div className="loading-text">レース情報を読み込み中...</div>
+        </div>
+      ) : filteredSchedules.length > 0 ? (
         <div className="schedule-list">
           {filteredSchedules.map(schedule => (
             <div key={schedule.id} className="schedule-item">
