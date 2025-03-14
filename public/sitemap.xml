@@ -1,42 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- トップページ -->
   <url>
-    <loc>https://your-domain.com/</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://www.rentalkart.jp/</loc>
+    <lastmod>2025-03-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- サーキット一覧ページ -->
   <url>
-    <loc>https://your-domain.com/tracks</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://www.rentalkart.jp/tracks</loc>
+    <lastmod>2025-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- 新規レース登録ページ -->
   <url>
-    <loc>https://your-domain.com/new-race</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://www.rentalkart.jp/new-race</loc>
+    <lastmod>2025-03-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- 新規サーキット登録ページ -->
   <url>
-    <loc>https://your-domain.com/new-track</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://www.rentalkart.jp/new-track</loc>
+    <lastmod>2025-03-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- 動的に生成されるページのサンプル -->
   <url>
-    <loc>https://your-domain.com/track/1</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://www.rentalkart.jp/track/1</loc>
+    <lastmod>2025-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-</urlset> 
+  <url>
+    <loc>https://www.rentalkart.jp/track/2</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/3</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/4</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/5</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/6</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/7</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/8</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/9</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.rentalkart.jp/track/10</loc>
+    <lastmod>2025-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
