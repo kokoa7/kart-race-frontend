@@ -16,17 +16,19 @@ const TrackDetail = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        // トラック情報とスケジュール情報を並行して取得
-        const [trackResponse, schedulesResponse] = await Promise.all([
-          axios.get(`https://kart-race-api.onrender.com/tracks/${trackId}`),
-          axios.get(`https://kart-race-api.onrender.com/schedules/track/${trackId}`)
-        ]);
+        const response = await axios.get(`https://kart-race-api.onrender.com/tracks/${trackId}`);
         
-        setTrack(trackResponse.data);
-        setSchedules(schedulesResponse.data);
+        // データを設定
+        setTrack(response.data);
+        
+        // schedules が存在し、配列であることを確認
+        // 配列でない場合や undefined/null の場合は空配列を設定
+        const schedulesData = response.data.schedules;
+        setSchedules(Array.isArray(schedulesData) ? schedulesData : []);
+        
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setError(`データの取得に失敗しました。エラー: ${error.message}`);
+        console.error('Error fetching track details:', error);
+        setError('サーキット情報の取得に失敗しました。');
       } finally {
         setIsLoading(false);
       }
