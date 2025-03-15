@@ -3,12 +3,14 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Analytics } from '@vercel/analytics/react';
 
 // React 18/19 の新しいレンダリング方法を使用
 const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <Analytics />
   </React.StrictMode>
 );
 
