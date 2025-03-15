@@ -14,12 +14,12 @@
       "sizes": "96x96"
     },
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
